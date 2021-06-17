@@ -1,10 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import styles from '../stylesheets/Pokelist.module.css';
 import Pokecard from '../components/Pokecard';
-import { useDispatch } from 'react-redux';
+import { useDispatch, connect } from 'react-redux';
 import { getList } from '../features/pokeListSlice';
 
-function Pokelist() {
+const mapStateToProps = (state: any) => {
+  return {pokeListAll: state.pokeList}
+}
+
+function Pokelist(props:any) {
   const [error, setError] = useState<any>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [list, setList] = useState<any>();
@@ -12,13 +16,14 @@ function Pokelist() {
 
   useEffect(() => {
 
-    dispatch(getList());
-
     const fetchData = async () => {
       const response = await fetch('https://pokeapi.co/api/v2/pokemon?offset=0&limit=12')
       const data = await response.json();
+      dispatch(getList());
 
       setIsLoaded(true);
+
+      console.log(props.pokeListAll);
 
       setList(data.results.map((pkmn: any) => {
         return <Pokecard key={pkmn.name} api={pkmn.url}/>
@@ -63,4 +68,4 @@ function Pokelist() {
   }
 };
 
-export default Pokelist;
+export default connect(mapStateToProps)(Pokelist);
