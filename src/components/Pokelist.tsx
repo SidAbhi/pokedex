@@ -1,13 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import styles from '../stylesheets/Pokelist.module.css';
 import Pokecard from '../components/Pokecard';
+import { useDispatch } from 'react-redux';
+import { getList } from '../features/pokeListSlice';
 
 function Pokelist() {
   const [error, setError] = useState<any>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [list, setList] = useState<any>();
+  const dispatch = useDispatch();
 
   useEffect(() => {
+
+    dispatch(getList());
+
     const fetchData = async () => {
       const response = await fetch('https://pokeapi.co/api/v2/pokemon?offset=0&limit=12')
       const data = await response.json();
@@ -38,7 +44,7 @@ function Pokelist() {
     //       setError(error);
     //     }
     //   )
-  }, [])
+  }, [dispatch])
 
   console.log('test');
 
