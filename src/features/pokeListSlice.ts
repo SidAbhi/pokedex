@@ -33,7 +33,16 @@ const pokeListSlice = createSlice({
       )
       .addCase(
         getList.fulfilled,
-        (state, action: PayloadAction<any>) => {state.list = action.payload.results}
+        (state, action: PayloadAction<any>) => {
+          state.list = action.payload.results;
+          state.status = 'success'
+        }
+      )
+      .addCase(
+        getList.rejected,
+        (state, action) => {
+          state.status = 'failed'
+        }
       )
     }
 });

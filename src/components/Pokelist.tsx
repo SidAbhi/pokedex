@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 import styles from '../stylesheets/Pokelist.module.css';
 import Pokecard from '../components/Pokecard';
 import { useDispatch, connect } from 'react-redux';
@@ -15,15 +15,18 @@ function Pokelist(props:any) {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    //If statement to prevent infinite rerenders
+    if(props.pokeListAll.status === 'idle') {
+      dispatch(getList());
+    }
+
+    console.log(props)
 
     const fetchData = async () => {
       const response = await fetch('https://pokeapi.co/api/v2/pokemon?offset=0&limit=12')
       const data = await response.json();
-      dispatch(getList());
 
       setIsLoaded(true);
-
-      console.log(props.pokeListAll);
 
       setList(data.results.map((pkmn: any) => {
         return <Pokecard key={pkmn.name} api={pkmn.url}/>
@@ -34,22 +37,7 @@ function Pokelist(props:any) {
       .catch(error =>{
         setError(error);
       });
-
-    // fetch('https://pokeapi.co/api/v2/pokemon?offset=0&limit=12')
-    //   .then(res => res.json())
-    //   .then(
-    //     (result) => {
-    //       setIsLoaded(true);
-    //       setList(result.results.map((pkmn: any) => {
-    //         return <Pokecard key={pkmn.name} api={pkmn.url}/>
-    //       }));
-    //     },
-    //     (error) => {
-    //       setIsLoaded(true);
-    //       setError(error);
-    //     }
-    //   )
-  }, [dispatch])
+  }, [dispatch, props])
 
   console.log('test');
 
