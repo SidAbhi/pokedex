@@ -12,15 +12,13 @@ function Pokelist(props:any) {
   const [list, setList] = useState<any>();
   const listAll= useGetPokemonListAllQuery(3);
 
-
-  console.log(listAll)
-
   useEffect(() => {
     if (listAll.isSuccess) {
       setList(listAll.data.results.map((pkmn: any) => {
         return <Pokecard key={pkmn.name} api={pkmn.url}/>
       }))
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[listAll.isSuccess])
 
   if (listAll.error) {
