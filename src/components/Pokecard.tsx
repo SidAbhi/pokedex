@@ -50,11 +50,18 @@ function Pokecard(props: any) {
         hiddenAbility: checkHiddenAbility(),
         color: colorSwitch(speciesData.color.name),
         sprites: {
-          thumbnail: '/sr/img.png',
+          spriteM: data.sprites.front_default,
+          spriteMShiny: data.sprites.front_shiny,
+          spriteF: data.sprites.front_female,
+          spriteFShiny: data.sprites.front_female_shiny,
+          hqArt: 'https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/imagesHQ/' + id.toString().padStart(3, '0') + '.png',
+          hqArtCompressed: 'https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/' + id.toString().padStart(3, '0') + '.png',
+          hqArtThumbnail: 'https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/thumbnails/' + id.toString().padStart(3, '0') + '.png',
+          hqArtThumbnailCompressed: 'https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/thumbnails-compressed/' + id.toString().padStart(3, '0') + '.png',
         }
       })
     }
-  }, [pokemonApi.isSuccess, pokemonApi.data, speciesApi.isSuccess, speciesApi.data])
+  }, [pokemonApi.isSuccess, pokemonApi.data, speciesApi.isSuccess, speciesApi.data, id])
 
   if (pokemonApi.isError || speciesApi.isError) {
 
@@ -70,6 +77,7 @@ function Pokecard(props: any) {
 
     return (
       <div className={styles.pokecard} style={{backgroundColor: pokemon.color}}>
+        <img src={pokemon.sprites.hqArtThumbnailCompressed} alt={pokemon.name}></img>
         {pokemon.name}-
         {pokemon.id}-
         {pokemon.primaryType}-
