@@ -3,7 +3,7 @@ import styles from '../stylesheets/Pokecard.module.css';
 import { useGetPokemonByIdQuery, useGetPokemonSpeciesQuery } from '../features/pokeSlice';
 
 function Pokecard(props: any) {
-  const id = props.api.replace('https://pokeapi.co/api/v2/pokemon/','').replace('/','');
+  const id = props.api.replace('https://pokeapi.co/api/v2/pokemon-species/','').replace('/','');
   const pokemonApi = useGetPokemonByIdQuery(id);
   const speciesApi = useGetPokemonSpeciesQuery(id);
   const [pokemon, setPokemon] = useState<any>(emptyPoke);
@@ -82,8 +82,6 @@ function Pokecard(props: any) {
         <img src={pokemon.sprites.hqArtCompressed} alt={pokemon.name} className={styles.img}></img>
         <div className={styles.id}>{pokemon.id}</div>
         <div className={styles.name}>{pokemon.name}</div>
-        {pokemon.primaryType}-
-        {pokemon.secondaryType}-
       </div>
     )
 

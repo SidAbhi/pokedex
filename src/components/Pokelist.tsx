@@ -10,7 +10,7 @@ const mapStateToProps = (state: any) => {
 
 function Pokelist(props:any) {
   const [list, setList] = useState<any>();
-  const listAll= useGetPokemonListAllQuery(8);
+  const listAll= useGetPokemonListAllQuery({offset: 7, limit: 8});
 
   useEffect(() => {
     if (listAll.isSuccess) {

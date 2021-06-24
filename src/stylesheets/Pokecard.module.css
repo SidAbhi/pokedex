@@ -10,7 +10,7 @@
   height: 50%;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -65%);
   position: absolute;
 }
 .name {
@@ -23,16 +23,28 @@
   text-align: center;
   font-family: 'Rubik', sans-serif;
   font-weight: 700;
-  font-size: 20px;
-  opacity: .65;
+  font-size: 22px;
+  opacity: .85;
   text-transform: capitalize
 }
 .botBox {
-  width: 250%;
-  height: 200%;
+  width: 100%;
+  height: 30%;
   position: absolute;
   top: 70%;
-  left: -50%;
   background-color: rgb(238, 237, 237);
-  outline: solid 20px;
+  outline: solid 15px;
+}
+.id {
+  position: absolute;
+  bottom: 2%;
+  left: .5em;
+  width: fit-content;
+  height: fit-content;
+  text-align: start;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  opacity: .35;
+  text-transform: capitalize
 }
