@@ -39,7 +39,7 @@ function Pokecard(props: any) {
 
       setPokemon({
         id: data.id,
-        name: data.name,
+        name: speciesData.name,
         primaryType: data.types[0].type.name,
         secondaryType: (data.types.length === 2) ? data.types[1].type.name : '',
         firstAbility: {
