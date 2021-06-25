@@ -10,22 +10,49 @@ const mapStateToProps = (state: any) => {
 
 function Pokelist(props:any) {
   const [list, setList] = useState<any>();
-  const listAll = useGetPokemonListAllQuery({offset: 0, limit: 9999});
+  const listGet = useGetPokemonListAllQuery({offset: 0, limit: 9999});
+  const [filteredPoke, setFilteredPoke] = useState<any>([]);
+  const [searchStatus, setSearchStatus] = useState<boolean>(false);
+  const [listAll, setListAll] = useState<any>([]);
   const [sliceStart, setSliceStart] = useState<number>(0);
   const [sliceEnd, setSliceEnd] = useState<number>(4);
-  const searchBar = useRef(null);
+  const searchBar = useRef(null)
+
+  const search = (e: any) => {
+    const searchString: string = e.target.value.toLowerCase();
+    const checkStatus = (searchString.length>2) ? true : false
+
+    const filter = listAll.filter((poke:any) => {
+      return (poke.name.includes(searchString))
+    });
+
+    setSliceStart(0);
+    setSliceEnd(4);
+    setFilteredPoke(filter);
+    setSearchStatus(checkStatus);
+  }
+
   const click = () => {
     setSliceStart(0);
     setSliceEnd(sliceEnd+4);
   }
 
   useEffect(() => {
-    if (listAll.isSuccess) {
-      setList(listAll.data.results.slice(sliceStart,sliceEnd).map((pkmn: any) => {
-        return <Pokecard key={pkmn.name} api={pkmn.url}/>
-      }))
+    if (listGet.isSuccess) {
+      setListAll(listGet.data.results);
+
+      if(searchStatus) {
+        setList(filteredPoke.slice(sliceStart,sliceEnd).map((pkmn: any) => {
+          return <Pokecard key={pkmn.name} api={pkmn.url}/>
+        }));
+      } else if (!searchStatus) {
+        setList(listAll.slice(sliceStart,sliceEnd).map((pkmn: any) => {
+          return <Pokecard key={pkmn.name} api={pkmn.url}/>
+        }));
+      }
     }
-  },[listAll.isSuccess, sliceEnd, sliceStart])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[listGet.isSuccess, sliceEnd, sliceStart, listAll, searchStatus, filteredPoke])
 
   if (listAll.error) {
     return <div className={styles.error}>Error: {listAll.error}</div>;
@@ -37,12 +64,13 @@ function Pokelist(props:any) {
     return (
       <div className={styles.main}>
         <input
+          onKeyUp={search}
           className={styles.searchBar}
           ref={searchBar}
           type="text"
           name="searchBar"
           id="searchBar"
-          placeholder="currently only English pokemon names are supported"
+          placeholder="Search by name(English)"
         />
         <div className={styles.list}>
           {list}
