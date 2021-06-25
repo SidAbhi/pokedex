@@ -3,7 +3,7 @@
   width: 80%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-auto-rows: minmax(300px, auto);
+  grid-auto-rows: minmax(450px, auto);
   gap: 15px;
 }
 .searchBar {
@@ -15,4 +15,7 @@
 }
 .main {
   width: 100%;
+}
+.buffer {
+  height: 30vh;
 }

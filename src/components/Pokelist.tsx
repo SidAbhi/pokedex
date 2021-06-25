@@ -3,6 +3,7 @@ import styles from '../stylesheets/Pokelist.module.css';
 import Pokecard from '../components/Pokecard';
 import { connect } from 'react-redux';
 import { useGetPokemonListAllQuery } from '../features/pokeSlice';
+import { Waypoint } from 'react-waypoint';
 
 const mapStateToProps = (state: any) => {
   return {pokeListAll: state.pokeList}
@@ -32,10 +33,13 @@ function Pokelist(props:any) {
     setSearchStatus(checkStatus);
   }
 
-  const click = () => {
+  const loadMore = () => {
     setSliceStart(0);
     setSliceEnd(sliceEnd+4);
+    console.log('test')
   }
+
+  const test = () => console.log('test')
 
   useEffect(() => {
     if (listGet.isSuccess) {
@@ -75,7 +79,11 @@ function Pokelist(props:any) {
         <div className={styles.list}>
           {list}
         </div>
-        <div onClick={click}>test</div>
+        <div className={styles.buffer}/>
+        <Waypoint 
+          onEnter={loadMore}
+          topOffset='40%'
+        />
       </div>
     )
   }
