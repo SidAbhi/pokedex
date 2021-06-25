@@ -28,7 +28,7 @@ function Pokelist(props:any) {
     });
 
     setSliceStart(0);
-    setSliceEnd(4);
+    setSliceEnd(8);
     setFilteredPoke(filter);
     setSearchStatus(checkStatus);
   }
@@ -36,10 +36,7 @@ function Pokelist(props:any) {
   const loadMore = () => {
     setSliceStart(0);
     setSliceEnd(sliceEnd+4);
-    console.log('test')
   }
-
-  const test = () => console.log('test')
 
   useEffect(() => {
     if (listGet.isSuccess) {
@@ -82,7 +79,6 @@ function Pokelist(props:any) {
         <div className={styles.buffer}/>
         <Waypoint 
           onEnter={loadMore}
-          topOffset='40%'
         />
       </div>
     )
