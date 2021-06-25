@@ -55,10 +55,7 @@ function Pokecard(props: any) {
           spriteMShiny: data.sprites.front_shiny,
           spriteF: data.sprites.front_female,
           spriteFShiny: data.sprites.front_female_shiny,
-          hqArt: 'https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/imagesHQ/' + id.toString().padStart(3, '0') + '.png',
-          hqArtCompressed: 'https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/' + id.toString().padStart(3, '0') + '.png',
-          hqArtThumbnail: 'https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/thumbnails/' + id.toString().padStart(3, '0') + '.png',
-          hqArtThumbnailCompressed: 'https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/thumbnails-compressed/' + id.toString().padStart(3, '0') + '.png',
+          hqArt: data.sprites.other["official-artwork"].front_default,
         }
       })
     }
@@ -79,7 +76,7 @@ function Pokecard(props: any) {
     return (
       <div className={styles.pokecard} style={{backgroundColor: pokemon.typeColor.default}}>
         <div className={styles.botBox} style={{outlineColor: pokemon.typeColor.dark}}></div>
-        <img src={pokemon.sprites.hqArtCompressed} alt={pokemon.name} className={styles.img}></img>
+        <img src={pokemon.sprites.hqArt} alt={pokemon.name} className={styles.img}></img>
         <div className={styles.id}>{pokemon.id}</div>
         <div className={styles.name}>{pokemon.name}</div>
       </div>
@@ -121,9 +118,6 @@ const emptyPoke = {
     spriteF: '',
     spriteFShiny: '',
     hqArt: '',
-    hqArtCompressed: '',
-    hqArtThumbnail: '',
-    hqArtThumbnailCompressed: '',
   }
 }
 
