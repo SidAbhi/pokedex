@@ -4,12 +4,14 @@ import Pokecard from '../components/Pokecard';
 import { connect } from 'react-redux';
 import { useGetPokemonListAllQuery } from '../features/pokeSlice';
 import { Waypoint } from 'react-waypoint';
+import { Routes, Route } from 'react-router-dom';
+import Pokepage from '../components/Pokepage';
 
 const mapStateToProps = (state: any) => {
   return {pokeListAll: state.pokeList}
 }
 
-function Pokelist(props:any) {
+const Pokelist = (props:any) => {
   const [list, setList] = useState<any>();
   const listGet = useGetPokemonListAllQuery({offset: 0, limit: 9999});
   const [filteredPoke, setFilteredPoke] = useState<any>([]);
@@ -84,6 +86,9 @@ function Pokelist(props:any) {
         >
           <div className="waypoint">load</div>
         </Waypoint>
+        <Routes>
+          <Route path=":id" element={<Pokepage/>}/>
+        </Routes>
       </div>
     )
   }

@@ -14,8 +14,6 @@ function Pokecard(props: any) {
   const [imgLoad, setImgLoad] = useState<number>(0)
   const pokeLink = `/pokemon/${id}`
 
-  console.log(imgLoad)
-
   const [hoverSpring, hoverApi] = useSpring(() => ({
     from: {
       transform: 'scale(1, 1)'

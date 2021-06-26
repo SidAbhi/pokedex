@@ -47,6 +47,7 @@
   font-weight: 700;
   font-size: 32px;
   opacity: .65;
+  color:rgb(0, 0, 0);
   text-transform: capitalize
 }
 .accentBox{
@@ -73,5 +74,6 @@
   font-weight: 700;
   font-size: 18px;
   opacity: .35;
-  text-transform: capitalize
+  text-transform: capitalize;
+  color: rgb(0, 0, 0);
 }

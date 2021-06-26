@@ -1,0 +1,22 @@
+.main {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.focus {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(56, 56, 56);
+  opacity: 0.65;
+}
+.page {
+  position: fixed;
+  width: 80%;
+  height: 90%;
+  top: 5%;
+  left: 10%;
+  background-color: rgb(238, 237, 237);
+}
