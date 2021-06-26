@@ -1,5 +1,4 @@
 .pokecardContainer {
-  position: relative;
   width: 100%;
   height: 100%;
   min-height: 450px;
@@ -34,7 +33,6 @@
   height: 50%;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -65%);
   position: absolute;
 }
 .name {
@@ -51,13 +49,18 @@
   opacity: .65;
   text-transform: capitalize
 }
+.accentBox{
+  width: 100%;
+  height: 35%;
+  position: absolute;
+  top: 65%;
+}
 .botBox {
   width: 100%;
   height: 30%;
   position: absolute;
   top: 70%;
   background-color: rgb(238, 237, 237);
-  outline: solid 15px;
 }
 .id {
   position: absolute;

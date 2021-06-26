@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useRef} from 'react';
 import styles from '../stylesheets/Pokecard.module.css';
 import { useGetPokemonByIdQuery, useGetPokemonSpeciesQuery } from '../features/pokeSlice';
 import { useSpring, animated } from 'react-spring';
@@ -9,6 +9,11 @@ function Pokecard(props: any) {
   const pokemonApi = useGetPokemonByIdQuery(id);
   const speciesApi = useGetPokemonSpeciesQuery(id);
   const [pokemon, setPokemon] = useState<any>(emptyPoke);
+  const imgRef = useRef(null);
+  const [imgLoad, setImgLoad] = useState<number>(0)
+  const pokeLink = `/pokemon/${id}`
+
+  console.log(imgLoad)
 
   const [hoverSpring, hoverApi] = useSpring(() => ({
     from: {
@@ -105,7 +110,7 @@ function Pokecard(props: any) {
       <div {...hover()} 
         className={styles.pokecardContainer}
         style={{
-          
+          position: 'relative'
         }}
       >
         <animated.div 
@@ -115,16 +120,20 @@ function Pokecard(props: any) {
             transform: hoverSpring.transform
           }}
         >
-          <div className={styles.botBox} style={{outlineColor: pokemon.typeColor.dark}}></div>
+          <div className={styles.accentBox} style={{backgroundColor: pokemon.typeColor.dark}}></div>
+          <div className={styles.botBox}></div>
           <div className={styles.id}>{pokemon.id}</div>
           <div className={styles.name}>{pokemon.name}</div>
         </animated.div>
         <animated.img 
+          ref={imgRef}
+          onLoad={()=>setImgLoad(1)}
           src={pokemon.sprites.hqArt} 
           alt={pokemon.name} 
           className={styles.img}
           style={{
-            transform: imgHoverSpring.transform
+            transform: imgHoverSpring.transform,
+            opacity: imgLoad
           }}/>
       </div>
     )
