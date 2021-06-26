@@ -1,12 +1,38 @@
 import {useEffect, useState} from 'react';
 import styles from '../stylesheets/Pokecard.module.css';
 import { useGetPokemonByIdQuery, useGetPokemonSpeciesQuery } from '../features/pokeSlice';
+import { useSpring, animated } from 'react-spring';
+import { useHover } from 'react-use-gesture';
 
 function Pokecard(props: any) {
   const id = props.api.replace('https://pokeapi.co/api/v2/pokemon-species/','').replace('/','');
   const pokemonApi = useGetPokemonByIdQuery(id);
   const speciesApi = useGetPokemonSpeciesQuery(id);
   const [pokemon, setPokemon] = useState<any>(emptyPoke);
+
+  const [hoverSpring, hoverApi] = useSpring(() => ({
+    from: {
+      transform: 'scale(1, 1)'
+    }
+  }));
+
+  const [imgHoverSpring, imgHoverApi] = useSpring(() => ({
+    from: {
+      transform: 'scale(1, 1) translate(-50%, -65%)'
+    }
+  }));
+
+  const hover = useHover(event => {
+    const val = event.hovering ? 'scale(1.02, 1.02)' : 'scale(1, 1)';
+    const valImg = event.hovering ? 'scale(1.12, 1.12) translate(-44%, -65%)' : 'scale(1, 1) translate(-50%, -65%)';
+
+    hoverApi.start({
+      transform: val
+    });
+    imgHoverApi.start({
+      transform: valImg
+    });
+  })
 
   useEffect(() =>{
     if (pokemonApi.isSuccess && speciesApi.isSuccess) {
@@ -68,17 +94,38 @@ function Pokecard(props: any) {
   } if (pokemonApi.isLoading || speciesApi.isLoading) {
 
     return (
-      <div className={styles.loading}> Loading... </div>
+      <div className={styles.loading}>
+        <div className={styles.botBoxLoading} style={{outlineColor: '#423a3a'}}></div>
+      </div>
     )
 
   } else if (pokemonApi.isSuccess && speciesApi.isSuccess) {
 
     return (
-      <div className={styles.pokecard} style={{backgroundColor: pokemon.typeColor.default}}>
-        <div className={styles.botBox} style={{outlineColor: pokemon.typeColor.dark}}></div>
-        <img src={pokemon.sprites.hqArt} alt={pokemon.name} className={styles.img}></img>
-        <div className={styles.id}>{pokemon.id}</div>
-        <div className={styles.name}>{pokemon.name}</div>
+      <div {...hover()} 
+        className={styles.pokecardContainer}
+        style={{
+          
+        }}
+      >
+        <animated.div 
+          className={styles.pokecard} 
+          style={{
+            backgroundColor: pokemon.typeColor.default,
+            transform: hoverSpring.transform
+          }}
+        >
+          <div className={styles.botBox} style={{outlineColor: pokemon.typeColor.dark}}></div>
+          <div className={styles.id}>{pokemon.id}</div>
+          <div className={styles.name}>{pokemon.name}</div>
+        </animated.div>
+        <animated.img 
+          src={pokemon.sprites.hqArt} 
+          alt={pokemon.name} 
+          className={styles.img}
+          style={{
+            transform: imgHoverSpring.transform
+          }}/>
       </div>
     )
 

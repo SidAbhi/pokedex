@@ -16,7 +16,7 @@ function Pokelist(props:any) {
   const [searchStatus, setSearchStatus] = useState<boolean>(false);
   const [listAll, setListAll] = useState<any>([]);
   const [sliceStart, setSliceStart] = useState<number>(0);
-  const [sliceEnd, setSliceEnd] = useState<number>(4);
+  const [sliceEnd, setSliceEnd] = useState<number>(8);
   const searchBar = useRef(null)
 
   const search = (e: any) => {
@@ -36,6 +36,7 @@ function Pokelist(props:any) {
   const loadMore = () => {
     setSliceStart(0);
     setSliceEnd(sliceEnd+4);
+    console.log('test')
   }
 
   useEffect(() => {
@@ -78,8 +79,11 @@ function Pokelist(props:any) {
         </div>
         <div className={styles.buffer}/>
         <Waypoint 
+          topOffset='45%'
           onEnter={loadMore}
-        />
+        >
+          <div className="waypoint">load</div>
+        </Waypoint>
       </div>
     )
   }

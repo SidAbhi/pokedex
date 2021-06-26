@@ -18,6 +18,9 @@
 .buffer {
   height: 25vh;
 }
+.waypoint {
+  height: 25vh;
+}
 
 @media (min-aspect-ratio: 7/10) {
   .list{
