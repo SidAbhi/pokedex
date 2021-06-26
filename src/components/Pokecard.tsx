@@ -3,6 +3,7 @@ import styles from '../stylesheets/Pokecard.module.css';
 import { useGetPokemonByIdQuery, useGetPokemonSpeciesQuery } from '../features/pokeSlice';
 import { useSpring, animated } from 'react-spring';
 import { useHover } from 'react-use-gesture';
+import {Link} from 'react-router-dom';
 
 function Pokecard(props: any) {
   const id = props.api.replace('https://pokeapi.co/api/v2/pokemon-species/','').replace('/','');
@@ -107,35 +108,37 @@ function Pokecard(props: any) {
   } else if (pokemonApi.isSuccess && speciesApi.isSuccess) {
 
     return (
-      <div {...hover()} 
-        className={styles.pokecardContainer}
-        style={{
-          position: 'relative'
-        }}
-      >
-        <animated.div 
-          className={styles.pokecard} 
+      <Link to={pokeLink}>
+        <div {...hover()} 
+          className={styles.pokecardContainer}
           style={{
-            backgroundColor: pokemon.typeColor.default,
-            transform: hoverSpring.transform
+            position: 'relative'
           }}
         >
-          <div className={styles.accentBox} style={{backgroundColor: pokemon.typeColor.dark}}></div>
-          <div className={styles.botBox}></div>
-          <div className={styles.id}>{pokemon.id}</div>
-          <div className={styles.name}>{pokemon.name}</div>
-        </animated.div>
-        <animated.img 
-          ref={imgRef}
-          onLoad={()=>setImgLoad(1)}
-          src={pokemon.sprites.hqArt} 
-          alt={pokemon.name} 
-          className={styles.img}
-          style={{
-            transform: imgHoverSpring.transform,
-            opacity: imgLoad
-          }}/>
-      </div>
+          <animated.div 
+            className={styles.pokecard} 
+            style={{
+              backgroundColor: pokemon.typeColor.default,
+              transform: hoverSpring.transform
+            }}
+          >
+            <div className={styles.accentBox} style={{backgroundColor: pokemon.typeColor.dark}}></div>
+            <div className={styles.botBox}></div>
+            <div className={styles.id}>{pokemon.id}</div>
+            <div className={styles.name}>{pokemon.name}</div>
+          </animated.div>
+          <animated.img 
+            ref={imgRef}
+            onLoad={()=>setImgLoad(1)}
+            src={pokemon.sprites.hqArt} 
+            alt={pokemon.name} 
+            className={styles.img}
+            style={{
+              transform: imgHoverSpring.transform,
+              opacity: imgLoad
+            }}/>
+        </div>
+      </Link>
     )
 
   } else {
