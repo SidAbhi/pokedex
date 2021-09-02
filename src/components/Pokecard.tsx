@@ -67,11 +67,13 @@ function Pokecard(props: any) {
         } }
       };
 
+      const checkSecondaryType = (data.types.length === 2) ? data.types[1].type.name : ''
+
       setPokemon({
         id: data.id,
         name: speciesData.name,
         primaryType: data.types[0].type.name,
-        secondaryType: (data.types.length === 2) ? data.types[1].type.name : '',
+        secondaryType: checkSecondaryType,
         firstAbility: {
           name: data.abilities[0].ability.name,
           id: data.abilities[0].ability.url.replace('https://pokeapi.co/api/v2/ability/','').replace('/','')
@@ -80,6 +82,7 @@ function Pokecard(props: any) {
         hiddenAbility: checkHiddenAbility(),
         color: colorSwitch(speciesData.color.name),
         typeColor: typeColorSwitch(data.types[0].type.name),
+        secondaryTypeColor: typeColorSwitch(checkSecondaryType),
         sprites: {
           spriteM: data.sprites.front_default,
           spriteMShiny: data.sprites.front_shiny,
@@ -90,6 +93,8 @@ function Pokecard(props: any) {
       })
     }
   }, [pokemonApi.isSuccess, pokemonApi.data, speciesApi.isSuccess, speciesApi.data, id])
+
+  const column = (pokemon.secondaryType !== '') ? '1fr 1fr' : '1fr';
 
   if (pokemonApi.isError || speciesApi.isError) {
 
@@ -121,7 +126,12 @@ function Pokecard(props: any) {
             }}
           >
             <div className={styles.accentBox} style={{backgroundColor: pokemon.typeColor.dark}}></div>
-            <div className={styles.botBox}></div>
+            <div className={styles.botBox}>
+              <div className={styles.typeContainer} style={{gridTemplateColumns: column}}>
+                <div className={styles.primaryType} style={{color: pokemon.typeColor.dark}}>{pokemon.primaryType}</div>
+                <div className={styles.secondaryType} style={{color: pokemon.secondaryTypeColor.dark}}>{pokemon.secondaryType}</div>
+              </div>
+            </div>
             <div className={styles.id}>{pokemon.id}</div>
             <div className={styles.name}>{pokemon.name}</div>
           </animated.div>
@@ -168,6 +178,11 @@ const emptyPoke = {
     default: '',
     dark: '',
     light: ''
+  },
+  secondaryTypeColor: {
+    default: '',
+    dark: '',
+    light: '',
   },
   sprites: {
     spriteM: '',
