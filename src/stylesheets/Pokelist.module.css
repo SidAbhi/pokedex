@@ -8,8 +8,9 @@
 .searchBar {
   display: block;
   width: 60%;
+  height: 1.6em;
   margin: 12px auto;
-  height: fit-content;
+  padding: 0.5em;
   font-size: 16px;
 }
 .main {
